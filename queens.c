@@ -1,7 +1,6 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 int is_valid(int *board, int row, int col)
 {
@@ -15,10 +14,9 @@ int is_valid(int *board, int row, int col)
     return 1;
 }
 
-void solve_nqueens(int size, int *board, int row)
+void solve(int size, int *board, int row)
 {
     int col = 0;
-    
     if (row == size)
     {
         int i = 0;
@@ -37,7 +35,7 @@ void solve_nqueens(int size, int *board, int row)
         if (is_valid(board, row, col))
         {
             board[row] = col;
-            solve_nqueens(size, board, row + 1);
+            solve(size, board, row + 1);
         }
         col++;
     }
@@ -47,14 +45,12 @@ int main(int argc, char **argv)
 {
     if (argc != 2)
         return 1;
-    int size;
-    size = atoi(argv[1]);
+    int size = atoi(argv[1]);
     if (size <= 0)
         return 1;
-    int *board;
-    board = calloc(size, sizeof(int));
+    int * board = calloc(size, sizeof(int));
     if (!board)
         return 1;
-    solve_nqueens(size, board, 0);
+    solve(size, board, 0);
     free(board);
 }
